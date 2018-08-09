@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 
 class DocumentListItemAdapter(
         private val context: Context,
-        var mValues: List<Document>? = null)
+        var mValues: MutableList<Document>? = null)
     : RecyclerView.Adapter<DocumentListItemAdapter.ViewHolder>() {
 
     val dateFormat = SimpleDateFormat("d MMM YYYY")

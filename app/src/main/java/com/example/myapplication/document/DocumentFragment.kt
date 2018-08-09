@@ -19,6 +19,8 @@ import retrofit2.Response
 
 class DocumentFragment : Fragment() {
 
+    private val PAGE_SIZE = 20
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: DocumentListItemAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -39,16 +41,21 @@ class DocumentFragment : Fragment() {
             adapter = viewAdapter
         }
 
+        recyclerView.addOnScrollListener(DocumentScrollListener(viewManager as LinearLayoutManager))
 
         if (loadedDocuments != null && loadedDocuments.isNotBlank()) {
-            viewAdapter.mValues = gson.fromJson(loadedDocuments, Array<Document>::class.java).toList()
+            viewAdapter.mValues = gson.fromJson(loadedDocuments, Array<Document>::class.java).toMutableList()
             viewAdapter.notifyDataSetChanged()
         } else {
-            loadDocuments()
+            loadDocuments(0)
         }
 
         swipeContainer = view.findViewById(R.id.documents_refresh)
-        swipeContainer.setOnRefreshListener { loadDocuments() }
+        swipeContainer.setOnRefreshListener {
+            viewAdapter.mValues!!.clear()
+            loadDocuments(0)
+        }
+
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -57,21 +64,23 @@ class DocumentFragment : Fragment() {
         return view
     }
 
-    private fun loadDocuments() {
+    private fun loadDocuments(page: Int) {
         val documentService = (this.activity!!.application as ClauseMatchApplication).documentService
         documentService.getCategoriesList().enqueue(categoryLoadCallback)
-        documentService.getDocuments().enqueue(documentLoadCallback)
+        documentService.getDocuments(page = page, pageSize = PAGE_SIZE).enqueue(documentLoadCallback)
     }
 
     private val documentLoadCallback: Callback<Pageable> = object : Callback<Pageable> {
         override fun onResponse(call: Call<Pageable>, response: Response<Pageable>) {
-            val documents = response.body()?.content
-            viewAdapter.mValues = documents
+            val documents = response.body()?.content ?: emptyList()
+
+            viewAdapter.mValues!!.addAll(documents)
             viewAdapter.notifyDataSetChanged()
+
             swipeContainer.isRefreshing = false
             PreferenceManager
                     .getDefaultSharedPreferences(context).edit()
-                    .putString(LOADED_CONTENT, gson.toJson(documents))
+                    .putString(LOADED_CONTENT, gson.toJson(viewAdapter.mValues))
                     .apply()
 
         }
@@ -90,4 +99,13 @@ class DocumentFragment : Fragment() {
             Log.d("MAIN_ACTIVITY", t.stackTrace.toString())
         }
     }
+
+    inner class DocumentScrollListener(linearLayoutManager: LinearLayoutManager) : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+
+        override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            loadDocuments(page)
+        }
+
+    }
+
 }
