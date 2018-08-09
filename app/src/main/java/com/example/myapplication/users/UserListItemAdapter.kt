@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.user_list_item.view.*
 
 class UserListItemAdapter(
         private val context: Context,
-        var mValues: List<User>? = null)
+        var mValues: MutableList<User>? = null)
     : RecyclerView.Adapter<UserListItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

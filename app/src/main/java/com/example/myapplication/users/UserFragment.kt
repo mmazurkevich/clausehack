@@ -24,6 +24,7 @@ import android.content.ClipData.Item
 import android.content.Intent
 import android.graphics.Color
 import android.support.design.widget.FloatingActionButton
+import okhttp3.ResponseBody
 
 
 class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
@@ -32,6 +33,7 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
     private lateinit var viewAdapter: UserListItemAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var swipeContainer: SwipeRefreshLayout
+    private lateinit var userService: UserApiService
     private val LOADED_CONTENT = "USERS_LIST"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +50,10 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
             adapter = viewAdapter
         }
 
+        userService = (this.activity!!.application as ClauseMatchApplication).userService
+
         if (loadedUsers != null && loadedUsers.isNotBlank()) {
-            viewAdapter.mValues = gson.fromJson(loadedUsers, Array<User>::class.java).toList()
+            viewAdapter.mValues = gson.fromJson(loadedUsers, Array<User>::class.java).toMutableList()
             viewAdapter.notifyDataSetChanged()
         } else {
             loadUsers()
@@ -66,7 +70,7 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
                 android.R.color.holo_red_light)
 
         val floatingActionButton = view.findViewById(R.id.add_user_btn) as FloatingActionButton
-        floatingActionButton.setOnClickListener { it ->
+        floatingActionButton.setOnClickListener {
             val intent = Intent(context, UserCreateActivity::class.java)
             context!!.startActivity(intent)
         }
@@ -74,30 +78,28 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
     }
 
     private fun loadUsers() {
-        val userService = (this.activity!!.application as ClauseMatchApplication).userService
-        userService.getUsers(includeDisabled = true).enqueue(usersLoadCallback)
+        swipeContainer.isRefreshing = true
+        userService.getUsers(includeDisabled = false).enqueue(usersLoadCallback)
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
         if (viewHolder is UserListItemAdapter.ViewHolder) {
-//            // get the removed item name to display it in snack bar
-//            val name = cartList.get(viewHolder.adapterPosition).getName()
-//
-//            // backup of removed item for undo purpose
-//            val deletedItem = cartList.get(viewHolder.adapterPosition)
-//            val deletedIndex = viewHolder.adapterPosition
-//
-//            // remove the item from recycler view
-//            mAdapter.removeItem(viewHolder.adapterPosition)
+            val user = viewAdapter.mValues!![position]
+
+            // backup of removed item for undo purpose
+            val deletedItem = user
+            val deletedIndex = viewHolder.adapterPosition
+
+            // disable user request
+            userService.disableUser(user.id!!).enqueue(disableUserCallback)
+
+            // remove the item from recycler view
+            viewAdapter.mValues!!.removeAt(position)
+            viewAdapter.notifyItemRemoved(position)
 
             // showing snack bar with Undo option
-            val snackbar = Snackbar
-                    .make(swipeContainer, "User removed from cart!", Snackbar.LENGTH_LONG)
-            snackbar.setAction("UNDO", View.OnClickListener {
-//                // undo is selected, restore the deleted item
-//                mAdapter.restoreItem(deletedItem, deletedIndex)
-            })
-            snackbar.setActionTextColor(Color.YELLOW)
+            val snackbar = Snackbar.make(swipeContainer, "User ${user.fullName} was disabled",
+                                    Snackbar.LENGTH_SHORT)
             snackbar.show()
         }
     }
@@ -115,7 +117,17 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
         }
 
         override fun onFailure(call: Call<MutableList<User>>, t: Throwable) {
-            Log.d("MAIN_ACTIVITY", t.stackTrace.toString())
+            Log.d("USER_LOAD", t.stackTrace.toString())
+        }
+    }
+
+    private val disableUserCallback: Callback<ResponseBody> = object : Callback<ResponseBody> {
+        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            loadUsers()
+        }
+
+        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            Log.d("USER_DISABLE", t.stackTrace.toString())
         }
     }
 }

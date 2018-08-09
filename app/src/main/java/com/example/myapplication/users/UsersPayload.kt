@@ -8,3 +8,8 @@ data class UserDto(val firstName: String,
                    val passwordConfirm: String)
 
 data class AuthorityDto(val authority: String)
+
+data class UserUpdateDto(val firstName: String,
+                   val lastName: String,
+                   val email: String,
+                   val username: String)
