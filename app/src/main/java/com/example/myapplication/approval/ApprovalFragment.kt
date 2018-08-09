@@ -35,7 +35,7 @@ class ApprovalFragment: Fragment() {
         val view = inflater.inflate(R.layout.approval_fragment, container, false)
 
         viewManager = LinearLayoutManager(context)
-        viewAdapter = ApprovalListItemAdapter(context!!)
+        viewAdapter = ApprovalListItemAdapter(context!!, this)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.approval_list).apply {
             layoutManager = viewManager
@@ -81,7 +81,7 @@ class ApprovalFragment: Fragment() {
         }
     }
 
-    private fun loadApprovalsFromRemote() {
+    fun loadApprovalsFromRemote() {
         val approvalService = (this.activity!!.application as ClauseMatchApplication).approvalService
         val approvalCallback = approvalService.getApprovals()
         approvalCallback.enqueue(approvalsLoadCallback)

@@ -23,10 +23,10 @@ data class ApprovalDto(
         val scope: Scope,
         val id: String,
         val uri: String,
-        val status: Status,
+        var status: Status,
         val paragraphUri: String,
         val documentUri: String,
-        val comment: String
+        var comment: String
 )
 
 data class ParagraphDto(
