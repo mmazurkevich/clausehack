@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".authorization.AuthActivity">
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_56"
+        android:src="@drawable/cm_logo" />
+
+    <EditText
+        android:id="@+id/auth_username"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_72"
+        android:layout_gravity="center"
+        android:padding="@dimen/dp_16"
+        android:hint="@string/prompt_username"
+        android:textColorHint="@color/colorPrimary"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:text="superadmin"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:maxLines="1"
+        android:background="@drawable/rounded_etx"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_16"
+        android:padding="@dimen/dp_16"
+        android:layout_gravity="center"
+        android:hint="@string/prompt_password"
+        android:textColorHint="@color/colorPrimary"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        android:text="yiezoo0V"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        android:maxLines="1"
+        android:background="@drawable/rounded_etx"/>
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp_48"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_32"
+        android:background="@drawable/rounded_btn"
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_32"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/colorSide"
+        android:text="Forgot password?"
+        />
+
+    <TextView
+        android:id="@+id/stack_trace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

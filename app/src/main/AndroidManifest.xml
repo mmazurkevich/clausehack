@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".ClauseMatchApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".authorization.AuthActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"/>
+        <activity
+            android:name=".document.DocumentCommentActivity"
+            android:label="Document Comments"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".document.DocumentPreviewActivity"
+            android:label="Document Preview"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".users.UserEditActivity"
+            android:label="User Edit"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".users.UserCreateActivity"
+            android:label="User Create"
+            android:parentActivityName=".MainActivity" />
+    </application>
+
+</manifest>

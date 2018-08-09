@@ -1,0 +1,48 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_8"
+    android:layout_marginTop="@dimen/dp_8"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/doc_users"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawablePadding="@dimen/dp_24"
+        android:drawableStart="@drawable/ic_menu_circle"
+        android:gravity="start|center_vertical"
+        android:text="@string/doc_action_users"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/doc_chat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawablePadding="@dimen/dp_24"
+        android:drawableStart="@drawable/ic_menu_circle"
+        android:gravity="start|center_vertical"
+        android:text="@string/doc_action_chat"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/doc_preview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:drawablePadding="@dimen/dp_24"
+        android:drawableStart="@drawable/ic_menu_circle"
+        android:gravity="start|center_vertical"
+        android:text="@string/doc_action_pdf"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp" />
+
+</LinearLayout>

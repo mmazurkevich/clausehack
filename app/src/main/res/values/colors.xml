@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#468ce3</color>
+    <color name="colorSide">#80468ce3</color>
+    <color name="colorPrimaryDark">#c8468ce3</color>
+    <color name="controlHighlight">#14468ce3</color>
+    <color name="controlTextBackground">#19468ce3</color>
+    <color name="controlUserIconBack">#32468ce3</color>
+    <color name="userItemBackground">#EDF4FC</color>
+    <color name="userItemSwipedBackground">#46468ce3</color>
+    <color name="colorAccent">#468ce3</color>
+
+    <color name="colorSignInButton">#1CA5E0</color>
+    <color name="colorSignInButtonText">#fff</color>
+    <color name="md_bottom_sheet_title_color">#7b7b7b</color>
+    <color name="md_bottom_sheet_text_color">#000</color>
+</resources>
