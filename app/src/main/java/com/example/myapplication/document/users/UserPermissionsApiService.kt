@@ -9,7 +9,7 @@ interface UserPermissionsApiService {
 
     @GET("api/v1/permissions")
     fun getUsersPerDocument(@Query("documentId") documentId: String,
-                              @Query("scope") scope: String = "document"): Call<Permission>
+                              @Query("scope") scope: String = "document"): Call<List<Permission>>
 
     @GET("api/v1/users")
     fun getUsersByParameters(@Query("groupId") groupId: String? = null,
@@ -20,7 +20,6 @@ interface UserPermissionsApiService {
     fun createOrUpdateUserAndGroupPermissionForDocument(@Path("documentId") documentId: String,
                                                         @Body dto: Permission): Call<Permission>
 
-    @DELETE
+    @DELETE("api/v1/permissions/{permissionId}")
     fun deletePermission(@Path("permissionId") permissionId: String): Call<ResponseBody>
-
 }

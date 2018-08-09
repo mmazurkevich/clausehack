@@ -8,6 +8,7 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.view.View
 import android.widget.TextView
 import com.example.myapplication.R
+import com.example.myapplication.document.users.DocumentUserActivity
 
 class DocumentBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -19,9 +20,15 @@ class DocumentBottomSheetFragment : BottomSheetDialogFragment() {
 
         val docChatBtn = dialog.findViewById(R.id.doc_chat) as TextView
         val docPreviewBtn = dialog.findViewById(R.id.doc_preview) as TextView
+        val docUsersBtn = dialog.findViewById(R.id.doc_users) as TextView
 
         docChatBtn.setOnClickListener({
             val intent = Intent(context, DocumentCommentActivity::class.java)
+            context!!.startActivity(intent)
+        })
+
+        docUsersBtn.setOnClickListener({
+            val intent = Intent(context, DocumentUserActivity::class.java)
             context!!.startActivity(intent)
         })
 

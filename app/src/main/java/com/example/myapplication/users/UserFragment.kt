@@ -26,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
+class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: UserListItemAdapter
@@ -66,7 +66,7 @@ class UserFragment : Fragment(), RecyclerItemTouchHelper.RecyclerItemTouchHelper
             restoreCachedOrLoadUsers()
         }
 
-        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this)
+        val itemTouchHelperCallback = UserRecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this)
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
 
         val floatingActionButton = view.findViewById(R.id.add_user_btn) as FloatingActionButton

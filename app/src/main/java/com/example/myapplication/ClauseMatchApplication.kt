@@ -7,6 +7,7 @@ import com.example.myapplication.approval.ApprovalApiService
 import com.example.myapplication.authorization.AuthorizationApiService
 import com.example.myapplication.document.Category
 import com.example.myapplication.document.DocumentApiService
+import com.example.myapplication.document.users.UserPermissionsApiService
 import com.example.myapplication.users.UserApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -42,6 +43,7 @@ class ClauseMatchApplication : Application() {
     val documentService: DocumentApiService = retrofit.create(DocumentApiService::class.java)
     val userService: UserApiService = retrofit.create(UserApiService::class.java)
     val approvalService: ApprovalApiService = retrofit.create(ApprovalApiService::class.java)
+    val userPermissionsService: UserPermissionsApiService = retrofit.create(UserPermissionsApiService::class.java)
 
     override fun onCreate() {
         super.onCreate()

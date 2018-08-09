@@ -35,6 +35,10 @@
             android:label="Document Preview"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".document.users.DocumentUserActivity"
+            android:label="Document Users"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".users.UserEditActivity"
             android:label="User Edit"
             android:parentActivityName=".MainActivity" />
