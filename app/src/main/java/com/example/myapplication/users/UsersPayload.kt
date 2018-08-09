@@ -13,3 +13,5 @@ data class UserUpdateDto(val firstName: String,
                    val lastName: String,
                    val email: String,
                    val username: String)
+
+var shouldReloadUsers = "SHOULD_RELOAD"

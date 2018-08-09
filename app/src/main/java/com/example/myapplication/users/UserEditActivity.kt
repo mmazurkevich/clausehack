@@ -1,8 +1,10 @@
 package com.example.myapplication.users
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.MenuItem
 import com.example.myapplication.ClauseMatchApplication
 import com.example.myapplication.R
 import com.example.myapplication.document.User
@@ -36,6 +38,19 @@ class UserEditActivity : AppCompatActivity() {
                     input_update_email.text.toString(),
                     user.username!!)
             userService.updateUser(user.id!!, userUpdateDto).enqueue(userUpdateCallback)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> {
+                onBackPressed()
+                true
+            }
         }
     }
 
@@ -80,9 +95,17 @@ class UserEditActivity : AppCompatActivity() {
         userService.updateAuthorities(user.id!!, authorities).enqueue(grantAuthoritiesCallback)
     }
 
+    private fun reloadUserContent() {
+        PreferenceManager
+                .getDefaultSharedPreferences(this).edit()
+                .putBoolean(shouldReloadUsers, true)
+                .apply()
+    }
+
     private val grantAuthoritiesCallback: Callback<ResponseBody> = object : Callback<ResponseBody> {
         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
             Log.d("USER_CREATE_ACTIVITY", "Saving status code ${response.code()}")
+            reloadUserContent()
             onBackPressed()
         }
 

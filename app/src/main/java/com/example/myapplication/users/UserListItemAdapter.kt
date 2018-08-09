@@ -48,12 +48,10 @@ class UserListItemAdapter(
                     .beginConfig().textColor(ContextCompat.getColor(context, R.color.colorPrimary)).endConfig()
                     .buildRound(letters.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
             holder.userIcon.setImageDrawable(drawable)
-            if (user.accountEnabled) {
-                holder.itemView.setOnClickListener {
-                    val intent = Intent(context, UserEditActivity::class.java)
-                    intent.putExtra("USER", gson.toJson(user))
-                    context.startActivity(intent)
-                }
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, UserEditActivity::class.java)
+                intent.putExtra("USER", gson.toJson(user))
+                context.startActivity(intent)
             }
         }
     }
@@ -61,6 +59,7 @@ class UserListItemAdapter(
     override fun getItemCount(): Int = mValues?.size ?: 0
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
         val userFullName: TextView = view.user_full_name
         val username: TextView = view.email
         val userStatus: TextView = view.user_status
