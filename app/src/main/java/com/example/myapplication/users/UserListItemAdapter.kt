@@ -33,7 +33,7 @@ class UserListItemAdapter(
         if (mValues != null) {
             val user = mValues!![position]
             holder.userFullName.text = user.fullName
-            holder.username.text = user.username
+            holder.username.text = user.email
             if (user.isOnline) {
                 holder.userStatus.text = "ONLINE"
                 holder.userStatus.visibility = View.VISIBLE

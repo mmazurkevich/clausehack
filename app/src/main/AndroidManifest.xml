@@ -39,6 +39,10 @@
             android:label="Document Users"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".document.users.DocumentUserEditActivity"
+            android:label="Document Users"
+            android:parentActivityName=".document.users.DocumentUserActivity" />
+        <activity
             android:name=".users.UserEditActivity"
             android:label="User Edit"
             android:parentActivityName=".MainActivity" />

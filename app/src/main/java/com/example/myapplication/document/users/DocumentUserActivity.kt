@@ -1,17 +1,22 @@
 package com.example.myapplication.document.users
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.EditText
+import android.widget.TextView
 import com.example.myapplication.ClauseMatchApplication
 import com.example.myapplication.R
 import com.example.myapplication.currentDocument
-import com.example.myapplication.users.UserListItemAdapter
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,6 +51,11 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
         userPermissionsService.getUsersPerDocument(documentId).enqueue(userPermissionsLoadCallback)
     }
 
+    public override fun onResume() {
+        super.onResume()
+        userPermissionsService.getUsersPerDocument(documentId).enqueue(userPermissionsLoadCallback)
+    }
+
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
         if (viewHolder is PermissionUserListItemAdapter.ViewHolder) {
             val permission = viewAdapter.mValues!![position]
@@ -61,6 +71,35 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
             Snackbar.make(this.findViewById(R.id.doc_user_layout), "User ${permission.user!!.fullName} was removed from document",
                     Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.action_bar, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
+            val searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
+            searchEditText.setHintTextColor(Color.WHITE)
+
+            val searchTextView = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
+            val mCursorDrawableRes = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+            mCursorDrawableRes.isAccessible = true
+            mCursorDrawableRes.set(searchTextView, 0)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return false
+                }
+            })
+            searchView.setOnCloseListener {
+                return@setOnCloseListener false
+            }
+        }
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

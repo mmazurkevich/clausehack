@@ -17,7 +17,7 @@ interface UserPermissionsApiService {
                              @Query("includeDisabled") includeDisabled: Boolean): Call<List<User>>
 
     @POST("api/v1/permissions")
-    fun createOrUpdateUserAndGroupPermissionForDocument(@Path("documentId") documentId: String,
+    fun createOrUpdateUserAndGroupPermissionForDocument(@Query("documentId") documentId: String,
                                                         @Body dto: Permission): Call<Permission>
 
     @DELETE("api/v1/permissions/{permissionId}")

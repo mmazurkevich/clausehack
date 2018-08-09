@@ -2,6 +2,7 @@ package com.example.myapplication.document.users
 
 
 import android.content.Context
+import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.myapplication.R
 import com.example.myapplication.TextDrawable
+import com.example.myapplication.gson
 import kotlinx.android.synthetic.main.permission_user_list_item.view.*
 
 
@@ -30,17 +32,17 @@ class PermissionUserListItemAdapter(
         if (mValues != null) {
             val permission = mValues!![position]
             holder.userFullName.text = permission.user!!.fullName
-            holder.username.text = permission.user!!.username
+            holder.username.text = permission.user!!.email
             val letters = permission.user!!.firstName?.first().toString() + permission.user!!.lastName?.first()
             val drawable = TextDrawable.builder()
                     .beginConfig().textColor(ContextCompat.getColor(context, R.color.colorPrimary)).endConfig()
                     .buildRound(letters.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
             holder.userIcon.setImageDrawable(drawable)
-//            holder.itemView.setOnClickListener {
-////                val intent = Intent(context, UserEditActivity::class.java)
-////                intent.putExtra("USER", gson.toJson(user))
-////                context.startActivity(intent)
-//            }
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, DocumentUserEditActivity::class.java)
+                intent.putExtra("PERMISSION", gson.toJson(permission))
+                context.startActivity(intent)
+            }
         }
     }
 

@@ -10,4 +10,7 @@ class Permission {
     var commentRole: String? = null
     var type: String? = null
     var user: User? = null
+    var scope: String? = null
+    var documentUri: String? = null
+    var userId: String? = null
 }
