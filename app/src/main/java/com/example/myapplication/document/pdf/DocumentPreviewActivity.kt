@@ -2,7 +2,6 @@ package com.example.myapplication.document.pdf
 
 import android.content.Context
 import android.os.Bundle
-import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.myapplication.ClauseMatchApplication
@@ -21,6 +20,9 @@ import java.io.IOException
 
 class DocumentPreviewActivity : AppCompatActivity(), OnPageChangeListener {
 
+    // Five minutes
+    val cacheValidTimeInMillis =  5 * 60 * 1000
+
     val documentId = currentDocument?.uri ?: ""
     val documentVersion = currentDocument?.versionOrder ?: 0
 
@@ -33,7 +35,7 @@ class DocumentPreviewActivity : AppCompatActivity(), OnPageChangeListener {
         // Get existing file if exists
         val cachedFile = this.filesDir.listFiles().firstOrNull { it.name == "$documentId.pdf" }
 
-        if (cachedFile != null && Math.abs(cachedFile.lastModified() - System.currentTimeMillis()) < 60 * 60 * 1000) {
+        if (cachedFile != null && Math.abs(cachedFile.lastModified() - System.currentTimeMillis()) < cacheValidTimeInMillis) {
             displayLoadedDocument()
         } else {
             val documentService = (application as ClauseMatchApplication).documentService
