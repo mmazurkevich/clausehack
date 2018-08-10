@@ -21,7 +21,7 @@
             android:textAllCaps="false"
             android:layout_marginRight="@dimen/dp_4"
             android:textColor="@android:color/white"
-            android:background="@drawable/approv_doc_par"/>
+            android:background="@drawable/approv_par"/>
 
         <Button
             android:id="@+id/document_approval_button"
@@ -30,8 +30,8 @@
             android:layout_weight="0.5"
             android:text="Documents"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:background="@drawable/approv_doc_par"/>
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/approv_doc"/>
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

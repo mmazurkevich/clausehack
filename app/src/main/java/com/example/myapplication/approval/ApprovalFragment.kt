@@ -1,8 +1,12 @@
 package com.example.myapplication.approval
 
+import android.app.Activity
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -45,13 +49,18 @@ class ApprovalFragment: Fragment() {
         loadApprovals()
 
         val paragraphApprovalButton = view.findViewById<Button>(R.id.paragraph_approval_button)
+        val documentApprovalButton = view.findViewById<Button>(R.id.document_approval_button)
+
         paragraphApprovalButton.setOnClickListener {
+            selectButton(paragraphApprovalButton)
+            unselectButton(documentApprovalButton)
             scope = Scope.paragraph
             loadApprovals()
         }
 
-        val documentApprovalButton = view.findViewById<Button>(R.id.document_approval_button)
         documentApprovalButton.setOnClickListener {
+            selectButton(documentApprovalButton)
+            unselectButton(paragraphApprovalButton)
             scope = Scope.document
             loadApprovals()
         }
@@ -67,6 +76,18 @@ class ApprovalFragment: Fragment() {
                 android.R.color.holo_red_light)
 
         return view
+    }
+
+    private fun selectButton(btn: Button) {
+        val selectedBackground = ContextCompat.getDrawable(context!!, R.drawable.approv_par)
+        btn.background = selectedBackground
+        btn.setTextColor(Color.WHITE)
+    }
+
+    private fun unselectButton(btn: Button) {
+        val unselectedBackground = ContextCompat.getDrawable(context!!, R.drawable.approv_doc)
+        btn.background = unselectedBackground
+        btn.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
     }
 
     private fun loadApprovals() {
