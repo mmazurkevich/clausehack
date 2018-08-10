@@ -21,7 +21,7 @@ import retrofit2.Response
 
 class DocumentFragment : Fragment() {
 
-    private val PAGE_SIZE = 20
+    private val PAGE_SIZE = 80
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: DocumentListItemAdapter

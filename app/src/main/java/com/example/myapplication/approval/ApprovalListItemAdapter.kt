@@ -35,10 +35,11 @@ class ApprovalListItemAdapter(private val context: Context,
             val approvalDto = mValues!![position]
             holder.documentTitle.text = approvalDto.documentTitle
 
-            holder.content.text = if (approvalDto.paragraph != null) {
-                approvalDto.paragraph.content.replace("<[^>]*>".toRegex(), "")
+            if (approvalDto.paragraph != null) {
+                holder.content.visibility = View.VISIBLE
+                holder.content.text = approvalDto.paragraph.content.replace("<[^>]*>".toRegex(), "")
             } else {
-               ""
+                holder.content.visibility = View.GONE
             }
 
             holder.docIcon.setImageResource(R.drawable.ic_document)

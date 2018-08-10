@@ -2,6 +2,7 @@ package com.example.myapplication.document.pdf
 
 import android.content.Context
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.myapplication.ClauseMatchApplication
@@ -29,14 +30,22 @@ class DocumentPreviewActivity : AppCompatActivity(), OnPageChangeListener {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val documentService = (application as ClauseMatchApplication).documentService
-        documentService.getDocumentTemporaryUrl(documentId, version = documentVersion)
-                .enqueue(documentTemporaryUrlCallback)
+        // Get existing file if exists
+        val cachedFile = this.filesDir.listFiles().firstOrNull { it.name == "$documentId.pdf" }
+
+        if (cachedFile != null && Math.abs(cachedFile.lastModified() - System.currentTimeMillis()) < 60 * 60 * 1000) {
+            displayLoadedDocument()
+        } else {
+            val documentService = (application as ClauseMatchApplication).documentService
+            documentService.getDocumentTemporaryUrl(documentId, version = documentVersion)
+                    .enqueue(documentTemporaryUrlCallback)
+        }
+
     }
 
-    fun loadDocument(temproatyUri: String) {
+    fun loadDocument(tempUri: String) {
         val documentService = (application as ClauseMatchApplication).documentService
-        documentService.loadDocumentFromAmazon(temproatyUri).enqueue(documentLoadCallback)
+        documentService.loadDocumentFromAmazon(tempUri).enqueue(documentLoadCallback)
     }
 
     fun displayLoadedDocument() {
