@@ -52,7 +52,7 @@ class DocumentFragment : Fragment() {
 
         swipeContainer = view.findViewById(R.id.documents_refresh)
         swipeContainer.setOnRefreshListener {
-            viewAdapter.mValues!!.clear()
+            viewAdapter.mValues.clear()
             loadDocuments(0)
         }
 
@@ -74,7 +74,7 @@ class DocumentFragment : Fragment() {
         override fun onResponse(call: Call<Pageable>, response: Response<Pageable>) {
             val documents = response.body()?.content ?: emptyList()
 
-            viewAdapter.mValues!!.addAll(documents)
+            viewAdapter.mValues.addAll(documents)
             viewAdapter.notifyDataSetChanged()
 
             swipeContainer.isRefreshing = false

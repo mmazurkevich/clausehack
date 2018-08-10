@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 
 class DocumentListItemAdapter(
         private val context: Context,
-        var mValues: MutableList<Document>? = null)
+        var mValues: MutableList<Document> = mutableListOf())
     : RecyclerView.Adapter<DocumentListItemAdapter.ViewHolder>() {
 
     val dateFormat = SimpleDateFormat("d MMM YYYY")
@@ -30,8 +30,7 @@ class DocumentListItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (mValues != null) {
-            val document = mValues!![position]
+            val document = mValues[position]
             holder.documentTitle.text = document.title
             val stage = if (document.isPublished) "Final" else "Draft"
             holder.docInfo.text = "$stage • ${dateFormat.format(document.firstRevisionCreatedDate)}"
@@ -49,10 +48,9 @@ class DocumentListItemAdapter(
                 holder.docAccess.visibility = View.GONE
             }else
                 holder.docAccess.visibility = View.VISIBLE
-        }
     }
 
-    override fun getItemCount(): Int = mValues?.size ?: 0
+    override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val documentTitle: TextView = view.document_title

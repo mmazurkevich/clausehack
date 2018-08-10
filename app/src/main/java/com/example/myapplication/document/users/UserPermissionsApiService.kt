@@ -14,7 +14,7 @@ interface UserPermissionsApiService {
     @GET("api/v1/users")
     fun getUsersByParameters(@Query("groupId") groupId: String? = null,
                              @Query("query") query: String?,
-                             @Query("includeDisabled") includeDisabled: Boolean): Call<List<User>>
+                             @Query("includeDisabled") includeDisabled: Boolean = false): Call<List<User>>
 
     @POST("api/v1/permissions")
     fun createOrUpdateUserAndGroupPermissionForDocument(@Query("documentId") documentId: String,

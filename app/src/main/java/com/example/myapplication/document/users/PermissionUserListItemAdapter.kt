@@ -18,8 +18,10 @@ import kotlinx.android.synthetic.main.permission_user_list_item.view.*
 
 
 class PermissionUserListItemAdapter(
+        private val docUserActivity: DocumentUserActivity,
         private val context: Context,
-        var mValues: MutableList<Permission>? = null)
+        var mValues: MutableList<Permission>? = null,
+        var isAddMode: Boolean = false)
     : RecyclerView.Adapter<PermissionUserListItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,9 +41,13 @@ class PermissionUserListItemAdapter(
                     .buildRound(letters.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
             holder.userIcon.setImageDrawable(drawable)
             holder.itemView.setOnClickListener {
-                val intent = Intent(context, DocumentUserEditActivity::class.java)
-                intent.putExtra("PERMISSION", gson.toJson(permission))
-                context.startActivity(intent)
+                if (isAddMode) {
+                    docUserActivity.grantUserPermission(permission)
+                } else {
+                    val intent = Intent(context, DocumentUserEditActivity::class.java)
+                    intent.putExtra("PERMISSION", gson.toJson(permission))
+                    docUserActivity.startActivity(intent)
+                }
             }
         }
     }

@@ -10,13 +10,13 @@ import android.support.v7.widget.SearchView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
 import com.example.myapplication.ClauseMatchApplication
 import com.example.myapplication.R
 import com.example.myapplication.currentDocument
+import com.example.myapplication.document.User
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +28,7 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PermissionUserListItemAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var searchView: SearchView
     val documentId = currentDocument?.uri ?: ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PermissionUserListItemAdapter(this)
+        viewAdapter = PermissionUserListItemAdapter(this, this)
         recyclerView = this.findViewById<RecyclerView>(R.id.doc_user_list).apply {
             layoutManager = viewManager
             adapter = viewAdapter
@@ -48,12 +49,27 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
 
         userPermissionsService = (application as ClauseMatchApplication).userPermissionsService
-        userPermissionsService.getUsersPerDocument(documentId).enqueue(userPermissionsLoadCallback)
+        loadUsers()
     }
 
     public override fun onResume() {
         super.onResume()
         userPermissionsService.getUsersPerDocument(documentId).enqueue(userPermissionsLoadCallback)
+    }
+
+    fun grantUserPermission(permission: Permission) {
+        userPermissionsService.createOrUpdateUserAndGroupPermissionForDocument(documentId, permission)
+                .enqueue(grantUserDocumentPermissionCallback)
+    }
+
+    fun loadUsers() {
+        viewAdapter.isAddMode = false
+        userPermissionsService.getUsersPerDocument(documentId).enqueue(userPermissionsLoadCallback)
+    }
+
+    fun searchUsers(query: String) {
+        viewAdapter.isAddMode = true
+        userPermissionsService.getUsersByParameters(query = query).enqueue(possibleUserLoadCallback)
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
@@ -77,7 +93,7 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
         menuInflater.inflate(R.menu.action_bar, menu)
         val searchItem = menu.findItem(R.id.action_search)
         if (searchItem != null) {
-            val searchView = searchItem.actionView as SearchView
+            searchView = searchItem.actionView as SearchView
             val searchEditText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text) as EditText
             searchEditText.setHintTextColor(Color.WHITE)
 
@@ -88,6 +104,11 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
                 override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText.isBlank()) {
+                        loadUsers()
+                    } else {
+                        searchUsers(newText)
+                    }
                     return false
                 }
 
@@ -96,6 +117,7 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
                 }
             })
             searchView.setOnCloseListener {
+                loadUsers()
                 return@setOnCloseListener false
             }
         }
@@ -112,6 +134,40 @@ class DocumentUserActivity : AppCompatActivity(), PermissionRecyclerItemTouchHel
                 onBackPressed()
                 true
             }
+        }
+    }
+
+    private val possibleUserLoadCallback: Callback<List<User>> = object : Callback<List<User>> {
+        override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+            viewAdapter.mValues = response.body()?.map {
+                Permission().apply {
+                    primaryRole = "WRITE"
+                    commentRole = "WRITE"
+                    approvalRole = "WRITE"
+                    type = "userPermission"
+                    user = it
+                    userId = it.id
+                    documentUri = documentId
+                    scope = "document"
+                }
+            }?.toMutableList()
+            viewAdapter.notifyDataSetChanged()
+        }
+
+        override fun onFailure(call: Call<List<User>>, t: Throwable) {
+            Log.d("DOCUMENT_USER_ACTIVITY", t.stackTrace.toString())
+        }
+    }
+
+    private val grantUserDocumentPermissionCallback: Callback<Permission> = object : Callback<Permission> {
+        override fun onResponse(call: Call<Permission>, response: Response<Permission>) {
+            if (!searchView.isIconified) {
+                searchView.onActionViewCollapsed()
+            }
+        }
+
+        override fun onFailure(call: Call<Permission>, t: Throwable) {
+            Log.d("DOCUMENT_USER_ACTIVITY", t.stackTrace.toString())
         }
     }
 
