@@ -40,6 +40,7 @@ class DocumentCommentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.document_comment_activity)
 
+        title = currentDocument?.title
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val loggingInterceptor = HttpLoggingInterceptor { Log.d("OkHttp", it) }.apply {

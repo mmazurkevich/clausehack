@@ -2,6 +2,7 @@ package com.example.myapplication.document.comments
 
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.LayoutInflater
@@ -118,6 +119,9 @@ class DocumentCommentListItemAdapter(
                 profileColor = ColorGenerator.MATERIAL.randomColor
                 profileColors[letter] = profileColor
             }
+//            val drawable = TextDrawable.builder()
+//                    .beginConfig().textColor(ContextCompat.getColor(context, R.color.colorPrimary)).endConfig()
+//                    .buildRound(letter.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
             val drawable = TextDrawable.builder()
                     .buildRound(letter, profileColor)
             profileImage.setImageDrawable(drawable)
