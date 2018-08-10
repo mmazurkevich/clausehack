@@ -33,7 +33,7 @@ class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHe
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var userService: UserApiService
-    private var originUsersList: MutableList<User>? = null
+    private var originUsersList: MutableList<User> = mutableListOf()
     private val LOADED_CONTENT = "USERS_LIST"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -109,7 +109,7 @@ class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHe
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
         if (viewHolder is UserListItemAdapter.ViewHolder) {
-            val user = viewAdapter.mValues!![position]
+            val user = viewAdapter.mValues[position]
 
             if (user.accountEnabled) {
                 // backup of removed item for undo purpose
@@ -120,7 +120,7 @@ class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHe
                 userService.disableUser(user.id!!).enqueue(disableUserCallback)
 
                 // remove the item from recycler view
-                viewAdapter.mValues!!.removeAt(position)
+                viewAdapter.mValues.removeAt(position)
                 viewAdapter.notifyItemRemoved(position)
 
                 // showing snack bar with Undo option
@@ -164,7 +164,7 @@ class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHe
 
     private fun search(query: String) {
         val filteredUserList = mutableListOf<User>()
-        originUsersList?.forEach {
+        originUsersList.forEach {
             if (it.firstName!!.contains(query, true)
                     || it.lastName!!.contains(query, true)
                     || it.email!!.contains(query, true)) {
@@ -177,11 +177,13 @@ class UserFragment : Fragment(), UserRecyclerItemTouchHelper.RecyclerItemTouchHe
 
     private val usersLoadCallback: Callback<MutableList<User>> = object : Callback<MutableList<User>> {
         override fun onResponse(call: Call<MutableList<User>>, response: Response<MutableList<User>>) {
-            val users = response.body()
+            val users = response.body() ?: mutableListOf()
+
             originUsersList = users
             viewAdapter.mValues = originUsersList
             viewAdapter.notifyDataSetChanged()
             swipeContainer.isRefreshing = false
+
             PreferenceManager
                     .getDefaultSharedPreferences(context).edit()
                     .putString(LOADED_CONTENT, gson.toJson(originUsersList))

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.user_list_item.view.*
 
 class UserListItemAdapter(
         private val context: Context,
-        var mValues: MutableList<User>? = null)
+        var mValues: MutableList<User> = mutableListOf())
     : RecyclerView.Adapter<UserListItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,33 +30,31 @@ class UserListItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (mValues != null) {
-            val user = mValues!![position]
-            holder.userFullName.text = user.fullName
-            holder.username.text = user.email
-            if (user.isOnline) {
-                holder.userStatus.text = "ONLINE"
-                holder.userStatus.visibility = View.VISIBLE
-            } else if (!user.accountEnabled) {
-                holder.userStatus.text = "DISABLED"
-                holder.userStatus.visibility = View.VISIBLE
-            } else {
-                holder.userStatus.visibility = View.GONE
-            }
-            val letters = user.firstName?.first().toString() + user.lastName?.first()
-            val drawable = TextDrawable.builder()
-                    .beginConfig().textColor(ContextCompat.getColor(context, R.color.colorPrimary)).endConfig()
-                    .buildRound(letters.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
-            holder.userIcon.setImageDrawable(drawable)
-            holder.itemView.setOnClickListener {
-                val intent = Intent(context, UserEditActivity::class.java)
-                intent.putExtra("USER", gson.toJson(user))
-                context.startActivity(intent)
-            }
+        val user = mValues[position]
+        holder.userFullName.text = user.fullName
+        holder.username.text = user.username
+        if (user.isOnline) {
+            holder.userStatus.text = "ONLINE"
+            holder.userStatus.visibility = View.VISIBLE
+        } else if (!user.accountEnabled) {
+            holder.userStatus.text = "DISABLED"
+            holder.userStatus.visibility = View.VISIBLE
+        } else {
+            holder.userStatus.visibility = View.GONE
+        }
+        val letters = user.firstName?.first().toString() + user.lastName?.first()
+        val drawable = TextDrawable.builder()
+                .beginConfig().textColor(ContextCompat.getColor(context, R.color.colorPrimary)).endConfig()
+                .buildRound(letters.toUpperCase(), ContextCompat.getColor(context, R.color.controlUserIconBack))
+        holder.userIcon.setImageDrawable(drawable)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, UserEditActivity::class.java)
+            intent.putExtra("USER", gson.toJson(user))
+            context.startActivity(intent)
         }
     }
 
-    override fun getItemCount(): Int = mValues?.size ?: 0
+    override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

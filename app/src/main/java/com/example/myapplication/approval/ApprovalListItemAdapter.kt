@@ -3,6 +3,7 @@ package com.example.myapplication.approval
 import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +36,7 @@ class ApprovalListItemAdapter(private val context: Context,
             holder.documentTitle.text = approvalDto.documentTitle
 
             holder.content.text = if (approvalDto.paragraph != null) {
-                approvalDto.paragraph.content
+                approvalDto.paragraph.content.replace("<[^>]*>".toRegex(), "")
             } else {
                ""
             }
