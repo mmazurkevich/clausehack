@@ -20,7 +20,7 @@ class DocumentListItemAdapter(
         var mValues: MutableList<Document> = mutableListOf())
     : RecyclerView.Adapter<DocumentListItemAdapter.ViewHolder>() {
 
-    val dateFormat = SimpleDateFormat("d MMM YYYY")
+    val dateFormat = SimpleDateFormat("d MMM yyyy")
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
