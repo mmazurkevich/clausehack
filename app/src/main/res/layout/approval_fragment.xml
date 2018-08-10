@@ -4,25 +4,34 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/dp_32"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8">
 
         <Button
             android:id="@+id/paragraph_approval_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Paragraphs" />
+            android:layout_weight="0.5"
+            android:text="Paragraphs"
+            android:textAllCaps="false"
+            android:layout_marginRight="@dimen/dp_4"
+            android:textColor="@android:color/white"
+            android:background="@drawable/approv_doc_par"/>
 
         <Button
             android:id="@+id/document_approval_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Documents" />
+            android:layout_weight="0.5"
+            android:text="Documents"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:background="@drawable/approv_doc_par"/>
     </LinearLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

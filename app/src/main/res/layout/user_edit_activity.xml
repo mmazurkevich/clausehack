@@ -20,7 +20,7 @@
             android:text="John"
             android:textColor="@color/colorPrimary"
             android:hint="First name"
-            android:textColorHint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -35,7 +35,7 @@
             android:text="Doe"
             android:textColor="@color/colorPrimary"
             android:hint="Last name"
-            android:textColorHint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -50,7 +50,7 @@
             android:text="johndoe@clausematch.com"
             android:textColor="@color/colorPrimary"
             android:hint="Email"
-            android:textColorHint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"/>
     </android.support.design.widget.TextInputLayout>
 
     <TextView

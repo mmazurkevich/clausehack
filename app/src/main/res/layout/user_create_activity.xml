@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="First name"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="Last name"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="Email"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="Username"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="Password"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:hint="Confirm Password"
-                android:textColorHint="@color/colorPrimary"/>
+                android:backgroundTint="@color/colorPrimary"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
