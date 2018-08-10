@@ -1,13 +1,13 @@
-package com.example.myapplication.document
+package com.example.myapplication.document.pdf
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.myapplication.ClauseMatchApplication
 import com.example.myapplication.R
 import com.example.myapplication.currentDocument
+import com.example.myapplication.document.DocumentAmazonUri
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener
 import okhttp3.ResponseBody

@@ -8,6 +8,8 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.view.View
 import android.widget.TextView
 import com.example.myapplication.R
+import com.example.myapplication.document.comments.DocumentCommentActivity
+import com.example.myapplication.document.pdf.DocumentPreviewActivity
 import com.example.myapplication.document.users.DocumentUserActivity
 
 class DocumentBottomSheetFragment : BottomSheetDialogFragment() {

@@ -1,4 +1,4 @@
-package com.example.myapplication.document
+package com.example.myapplication.document.comments
 
 
 import android.content.Context
@@ -13,6 +13,8 @@ import com.example.myapplication.ColorGenerator
 import com.example.myapplication.R
 import com.example.myapplication.TextDrawable
 import com.example.myapplication.currentUser
+import com.example.myapplication.document.DocumentComment
+import com.example.myapplication.document.WSEventDto
 
 
 class DocumentCommentListItemAdapter(

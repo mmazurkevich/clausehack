@@ -1,4 +1,4 @@
-package com.example.myapplication.document
+package com.example.myapplication.document.comments
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.example.myapplication.*
+import com.example.myapplication.document.DocumentComment
+import com.example.myapplication.document.DocumentCommentDto
+import com.example.myapplication.document.WSEventDto
 import com.example.myapplication.stomped.client.StompedClient
 import com.example.myapplication.stomped.component.StompedFrame
 import com.example.myapplication.stomped.listener.OkWebSocketListener
@@ -92,10 +95,10 @@ class DocumentCommentActivity : AppCompatActivity() {
 
         comment_send_btn.setOnClickListener {
             val commentDto = DocumentCommentDto(UUID.randomUUID().toString(),
-                                documentId = currentDocument?.uri!!,
-                                version = currentDocument?.versionOrder,
-                                createdBy = currentUser!!,
-                                content = "<p>${comment_message.text}</p>")
+                    documentId = currentDocument?.uri!!,
+                    version = currentDocument?.versionOrder,
+                    createdBy = currentUser!!,
+                    content = "<p>${comment_message.text}</p>")
             documentService.createDocumentComment(currentDocument?.uri!!, commentDto)
                             .enqueue(commentCreatedCallback)
             comment_message.text.clear()

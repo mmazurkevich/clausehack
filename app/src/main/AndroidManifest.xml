@@ -27,11 +27,11 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".document.DocumentCommentActivity"
+            android:name=".document.comments.DocumentCommentActivity"
             android:label="Document Comments"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".document.DocumentPreviewActivity"
+            android:name=".document.pdf.DocumentPreviewActivity"
             android:label="Document Preview"
             android:parentActivityName=".MainActivity" />
         <activity
