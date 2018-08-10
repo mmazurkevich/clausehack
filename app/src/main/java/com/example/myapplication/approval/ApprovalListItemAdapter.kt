@@ -3,7 +3,6 @@ package com.example.myapplication.approval
 import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +43,7 @@ class ApprovalListItemAdapter(private val context: Context,
 
             holder.docIcon.setImageResource(R.drawable.ic_document)
 
-            holder.acceptButton.setOnClickListener {
+            holder.acceptApproval.setOnClickListener {
                 approvalDto.approval.status = Status.ACCEPTED
                 acceptOrRejectApproval(approvalDto.documentUri, approvalDto.approval.id, approvalDto.approval, position)
             }
@@ -52,12 +51,19 @@ class ApprovalListItemAdapter(private val context: Context,
             holder.rejectApproval.setOnClickListener {
                 // Open comment dialog
                 holder.rejectDialog.visibility = View.VISIBLE
+                // Hide accept/reject buttons
+                holder.acceptApproval.visibility = View.GONE
+                holder.rejectApproval.visibility = View.GONE
             }
 
             // Cancel rejection
             holder.cancelReject.setOnClickListener {
                 approvalDto.approval.status = Status.PENDING
                 holder.rejectDialog.visibility = View.GONE
+
+                // Restore accept/reject buttons
+                holder.acceptApproval.visibility = View.VISIBLE
+                holder.rejectApproval.visibility = View.VISIBLE
 
                 closeKeyboard()
             }
@@ -83,7 +89,7 @@ class ApprovalListItemAdapter(private val context: Context,
         val documentTitle: TextView = view.document_title
         val content: TextView = view.paragraph_content
         val docIcon: ImageView = view.doc_icon
-        val acceptButton: Button = view.accept_approval
+        val acceptApproval: Button = view.accept_approval
         val rejectApproval: Button = view.reject_approval
         val rejectDialog: LinearLayout = view.reject_dialog
         val rejectComment: EditText = view.reject_comment
