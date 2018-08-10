@@ -15,6 +15,7 @@
         <activity
             android:name=".authorization.AuthActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,30 +26,37 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".document.comments.DocumentCommentActivity"
             android:label="Document Comments"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".document.pdf.DocumentPreviewActivity"
             android:label="Document Preview"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".document.users.DocumentUserActivity"
             android:label="Document Users"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".document.users.DocumentUserEditActivity"
             android:label="Document Users"
+            android:screenOrientation="portrait"
             android:parentActivityName=".document.users.DocumentUserActivity" />
         <activity
             android:name=".users.UserEditActivity"
             android:label="User Edit"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".users.UserCreateActivity"
             android:label="User Create"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
     </application>
 

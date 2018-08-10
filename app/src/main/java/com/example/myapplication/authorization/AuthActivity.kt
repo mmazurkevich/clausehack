@@ -11,6 +11,14 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.view.Gravity
+import android.widget.ImageView
+import android.widget.Toast
+import android.widget.LinearLayout
+
+
+
+
 
 
 class AuthActivity : AppCompatActivity() {
@@ -36,6 +44,18 @@ class AuthActivity : AppCompatActivity() {
                         }
                     }
             )
+        }
+        forgot_password.setOnClickListener {
+            // Get the custom layout view.
+            val toastView = layoutInflater.inflate(R.layout.fogot_password, null)
+
+            // Initiate the Toast instance.
+            val toast = Toast(applicationContext)
+            // Set custom view in toast.
+            toast.view = toastView
+            toast.duration = Toast.LENGTH_SHORT
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
         }
     }
 
